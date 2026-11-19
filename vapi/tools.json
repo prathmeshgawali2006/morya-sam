@@ -1,0 +1,152 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "get_wait_time",
+      "description": "Find out how long the caller must wait for a barber right now, and the next free time. Use when the caller asks about waiting time or when they can come.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "description": "haircut, beard styling, or haircut and beard (Hindi or English words are fine)"
+          }
+        },
+        "required": [
+          "service"
+        ]
+      }
+    },
+    "server": {
+      "url": "https://YOUR-TUNNEL-URL/api/voice/tools"
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "check_availability",
+      "description": "List free appointment times for a service on a day. Use before offering any booking time.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string",
+            "description": "haircut, beard styling, or haircut and beard (Hindi or English words are fine)"
+          },
+          "date": {
+            "type": "string",
+            "description": "YYYY-MM-DD, or the word today or tomorrow"
+          },
+          "after": {
+            "type": "string",
+            "description": "Optional. Only times at or after this, 24-hour HH:MM, for example 17:00"
+          }
+        },
+        "required": [
+          "service",
+          "date"
+        ]
+      }
+    },
+    "server": {
+      "url": "https://YOUR-TUNNEL-URL/api/voice/tools"
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "book_appointment",
+      "description": "Book an appointment. Only call after reading the details back and getting a clear yes from the caller.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Caller's name"
+          },
+          "phone": {
+            "type": "string",
+            "description": "10-digit phone number. Leave out on a real phone call: the caller's number is used."
+          },
+          "service": {
+            "type": "string",
+            "description": "haircut, beard styling, or haircut and beard (Hindi or English words are fine)"
+          },
+          "date": {
+            "type": "string",
+            "description": "YYYY-MM-DD, or today or tomorrow"
+          },
+          "time": {
+            "type": "string",
+            "description": "24-hour HH:MM, for example 15:30"
+          },
+          "customer_confirmed": {
+            "type": "boolean",
+            "description": "true only if the caller clearly said yes after the read-back"
+          }
+        },
+        "required": [
+          "name",
+          "service",
+          "date",
+          "time",
+          "customer_confirmed"
+        ]
+      }
+    },
+    "server": {
+      "url": "https://YOUR-TUNNEL-URL/api/voice/tools"
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "find_my_bookings",
+      "description": "List the caller's upcoming bookings.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "10-digit phone number. Leave out on a real phone call."
+          }
+        },
+        "required": []
+      }
+    },
+    "server": {
+      "url": "https://YOUR-TUNNEL-URL/api/voice/tools"
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cancel_appointment",
+      "description": "Cancel one booking. Only call after the caller clearly said yes.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "booking_id": {
+            "type": "integer",
+            "description": "The booking_id from find_my_bookings"
+          },
+          "phone": {
+            "type": "string",
+            "description": "10-digit phone number. Leave out on a real phone call."
+          },
+          "customer_confirmed": {
+            "type": "boolean",
+            "description": "true only if the caller clearly said yes"
+          }
+        },
+        "required": [
+          "booking_id",
+          "customer_confirmed"
+        ]
+      }
+    },
+    "server": {
+      "url": "https://YOUR-TUNNEL-URL/api/voice/tools"
+    }
+  }
+]
